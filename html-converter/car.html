@@ -1,0 +1,86 @@
+<html>
+    <style>
+        body{
+            zoom: 3;
+            user-select: none;
+          text-align: center;
+        }
+        .container{
+          margin: 0 auto;
+          justify-content: center;
+          display: flex;
+        }
+        .buttonPanel{
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(3, 1fr);
+          grid-column-gap: 10px;
+          grid-row-gap: 10px;
+          margin: 0 auto;
+        }
+        .buttonPanel button{
+          text-align: center;
+          height: 90px;
+          width: 90px;
+        }
+        #forward{
+          grid-column: 2 / 3;
+          grid-row: 1 / 2;
+        }
+        #left{
+          grid-column: 1 / 2;
+          grid-row: 2 / 3;
+        }
+        #right{
+          grid-column: 3 / 3;
+          grid-row: 2 / 3;
+        }
+        #backward{
+          grid-column: 2 / 3;
+          grid-row: 3 / 3;
+        }
+        #stop{
+          grid-column: 2 / 3;
+          grid-row: 2 / 3;
+        }
+    </style>
+
+    <body>
+        <h1> Car Controller! </h1>
+        <p> You can turn on/off LED on ESP by clicking on this button: </p>
+
+        <div class="container">
+            <div class="buttonPanel">
+              <button type="submit" id="forward" onClick="handleClick(this.id)"> Forward </button>
+              <button type="submit" id="left" onClick="handleClick(this.id)"> Left </button>
+              <button type="submit" id="right" onClick="handleClick(this.id)"> Right </button>
+              <button type="submit" id="backward" onClick="handleClick(this.id)"> Backward </button>
+              <button type="submit" id="stop" onClick="handleClick(this.id)"> Stop </button>
+            </div>
+          </div>
+    </body>
+    
+    <script>
+        function handleClick(stateID) {
+            const pressedButton = document.getElementById(stateID);
+            let time; 
+
+            pressedButton.onpointerdown = function() {
+                time = Date.now();
+                fetch("/car?state=" + stateID, {
+                    method: "GET"
+                }).then(res => {
+                    console.log("Pointer down!:", res);
+                });
+            }
+
+            pressedButton.onpointerup = function() {
+                fetch("/car?state=stop", {
+                    method: "GET"
+                }).then(res => {
+                    console.log("Pointer up!:", res);
+                });
+            }
+        }
+    </script>
+</html>
