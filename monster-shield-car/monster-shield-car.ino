@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include "home.h"
-#include "car.h"
+#include "car-debug.h"
 
 /* === ARDUINO + MOTORSHIELD
 
@@ -84,28 +84,27 @@ void setup() {
   server.begin();
   Serial.println("HTTP server started");
 
-  // Serial.begin(9600);
-
-  // Serial.println("Begin motor control");
-  // Serial.println("=======");
-  // Serial.println("Enter number for control option:");
-  // Serial.println("1. STOP");
-  // Serial.println("W. MOVE FORWARD");
-  // Serial.println("A. ROTATE LEFT");
-  // Serial.println("D. ROTATE RIGHT");
-  // Serial.println("S. MOVE BACKWARD");
-  // Serial.println("=======");
+  /*Serial.begin(9600);
+  Serial.println("Begin motor control");
+  Serial.println("=======");
+  Serial.println("Enter number for control option:");
+  Serial.println("1. STOP");
+  Serial.println("W. MOVE FORWARD");
+  Serial.println("A. ROTATE LEFT");
+  Serial.println("D. ROTATE RIGHT");
+  Serial.println("S. MOVE BACKWARD");
+  Serial.println("=======");*/
 }
 
 void handle_home() {
   server.send(200, "text/html", home);
 }
 
-// void handle_button() {
-//   server.send(200, "text/html", button);
-//   isLOW = !isLOW;
-//   digitalWrite(BUILTIN_LED, isLOW);
-// }
+/*void handle_button() {
+  server.send(200, "text/html", button);
+  isLOW = !isLOW;
+  digitalWrite(BUILTIN_LED, isLOW);
+}*/
 
 void handle_car() {
   if (server.arg("state") == "") { 
@@ -144,8 +143,8 @@ void loop() {
     stop();
   }
 
-  Serial.print("Distance: ");
-  Serial.println(distance);
+  // Serial.print("Distance: ");
+  // Serial.println(distance);
 }
 
 void input_manager(String command) {
@@ -177,7 +176,7 @@ void stop() {
 
 void move_forward() {
   // COUNTER CLOCKWISE MOVEMENT
-  Serial.println("backward " + String(curSpeed));
+  Serial.println("forward ");
   isForward = true;
 
   for (int i = 0; i < 2; i++) {
@@ -188,7 +187,7 @@ void move_forward() {
 
 void move_backward() {
   // CLOCKWISE MOVEMENT
-  Serial.println("forward " + String(curSpeed));
+  Serial.println("backward ");
   isForward = false;
 
   for (int i = 0; i < 2; i++) {
@@ -198,7 +197,7 @@ void move_backward() {
 }
 
 void rotate_left() {
-  Serial.println("left " + String(curSpeed));
+  Serial.println("left ");
   isForward = false;
 
   set_CW(1);
@@ -210,7 +209,7 @@ void rotate_left() {
 }
 
 void rotate_right() {
-  Serial.println("right " + String(curSpeed));
+  Serial.println("right ");
   isForward = false;
 
   set_CW(0);

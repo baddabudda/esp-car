@@ -1,6 +1,6 @@
-filename = 'index.html'
+filename = 'car-mobile.html'
 file = None
-string = 'extern const char * html = '
+string = 'extern const char * car = '
 
 with open(filename) as f:
     for line in f:
