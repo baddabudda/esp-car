@@ -79,32 +79,14 @@ void setup() {
   
   server.on("/", handle_home);
   server.on("/car", handle_car);
-  // server.on("/button", handle_button);
   
   server.begin();
   Serial.println("HTTP server started");
-
-  /*Serial.begin(9600);
-  Serial.println("Begin motor control");
-  Serial.println("=======");
-  Serial.println("Enter number for control option:");
-  Serial.println("1. STOP");
-  Serial.println("W. MOVE FORWARD");
-  Serial.println("A. ROTATE LEFT");
-  Serial.println("D. ROTATE RIGHT");
-  Serial.println("S. MOVE BACKWARD");
-  Serial.println("=======");*/
 }
 
 void handle_home() {
   server.send(200, "text/html", home);
 }
-
-/*void handle_button() {
-  server.send(200, "text/html", button);
-  isLOW = !isLOW;
-  digitalWrite(BUILTIN_LED, isLOW);
-}*/
 
 void handle_car() {
   if (server.arg("state") == "") { 
@@ -118,15 +100,6 @@ void handle_car() {
 
 void loop() {
   server.handleClient();
-  // char command;
-  
-  /* while (Serial.available()) {
-    command = Serial.read();
-    // digitalWrite(EN_PIN_1, HIGH);
-    // digitalWrite(EN_PIN_2, HIGH);
-    
-    input_manager(command);
-  } */
 
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
